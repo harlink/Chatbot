@@ -2,27 +2,37 @@ package chatbot.controller;
 
 import javax.swing.JOptionPane;
 
+import chatbot.model.Chatbot;
 import chatbot.view.ChatbotView;
 
 public class ChatbotAppController
 {
 	private ChatbotView applicationView;
+	private Chatbot myFreemanBot;
 	
 	public ChatbotAppController()
 	{
 		applicationView = new ChatbotView(this);
-	
+		myFreemanBot = new Chatbot("Gordan Freeman");
 	}
 	
 	public void start()
 	{
-		String result = applicationView.showChatbot("idk");
+		String result = applicationView.showChatbot("Harley");
 		
-		if (result.equalsIgnoreCase("exit"))
+		
+		
+		while (!myFreemanBot.quitChecker(result))
 		{
-			quit();
+			result = applicationView.showChatbot(result);
+			
 		}
+			quit();
+		
+		
 	}
+	
+	
 	
 	private void quit()
 	{
