@@ -5,8 +5,8 @@ import java.util.ArrayList;
 /**
  * The chatbot model class. Used for checking and messing with strings
  * 
- * @author hpre8409
- * @version 1.2 10/10/14
+ * @author Harley Prelip
+ * @version 1.4 11/11/14 Updated ProcessText and added a checker.
  */
 public class Chatbot
 {
@@ -14,6 +14,8 @@ public class Chatbot
 	private String name;
 	private int chatCount;
 	private boolean stringLengthChecker;
+	private ChatbotUser myUser;
+	private ArrayList<String> userInputList;
 
 	/**
 	 * Creates a Chatbot object with the supplied name and initializes the
@@ -25,8 +27,11 @@ public class Chatbot
 	public Chatbot(String name)
 	{
 		memeList = new ArrayList<String>();
+		userInputList = new ArrayList<String>();
 		this.name = name;
 		chatCount = 0;
+		myUser = new ChatbotUser();
+		
 		fillTheMemeList();
 	}
 
@@ -43,6 +48,16 @@ public class Chatbot
 	public int getChatCount()
 	{
 		return chatCount;
+	}
+
+	public ChatbotUser getMyUser()
+	{
+		return myUser;
+	}
+
+	public void setMyUser(ChatbotUser myUser)
+	{
+		this.myUser = myUser;
 	}
 
 	public void setName(String name)
@@ -64,7 +79,6 @@ public class Chatbot
 		memeList.add("valve");
 	}
 
-	
 	/**
 	 * Processes input from the user against the checker methods. returns next
 	 * output for the view
@@ -72,12 +86,29 @@ public class Chatbot
 	 * @param currentInput
 	 * @return The processed text based on the checker or other methods.
 	 */
-	public String processText(String currentInput)
+	public String processText(String currentinput)
 	{
-		String result = "";
+		String currentInput = currentinput;
+		String result = "daves not here man";
+		
+		
+		if(getChatCount() <  7)
+		{
+			if(getChatCount() == 0)
+			{
+				myUser.setUserName(currentinput);
+				result = " cool name yo " + myUser.getUserName() + " how old are you?";
+			}
+			else if(getChatCount() == 1)
+			{
+				int userAge = Integer.parseInt(currentinput);
+				myUser.setAge(userAge);
+			}
+			//continue for other user input fields
+		}
 
-		int randomPosition = (int) (Math.random() * 3);
-		if (currentInput != null)
+		int randomPosition = (int) (Math.random() * 6);
+		if (currentInput != null && currentInput.length() > 0)
 		{
 
 			if (randomPosition == 0)
@@ -85,14 +116,14 @@ public class Chatbot
 				if (stringLengthChecker(currentInput))
 				{
 					result = "too long";
-				}
-				else
+				} else
 				{
 					result = "short words";
 				}
 
 			} else if (randomPosition == 1)
 			{
+				// i heared you like if loops so i nested a few if's in another if
 				if (memeChecker(currentInput))
 				{
 					result = "you know their secret³";
@@ -101,66 +132,97 @@ public class Chatbot
 					result = "i think thats one 2 l3ss than the secret";
 
 				}
-			} else
+				if (currentInput.equalsIgnoreCase("Sound of silence"))
+				{
+					result = "Can you hear the Sound of Silence..?";
+				}
+
+				if (currentInput.equalsIgnoreCase("Ravenholm"))
+				{
+					result = "Ravenholm...? we don't go.. to RavenHolm anymore";
+				}
+				if (currentInput.equalsIgnoreCase("Yo Dawg"))
+				{
+					result = "Yo Dawg I heard you like mei mei's so I put a meme in yo meme so you can read memes while you read memes";
+				}
+				if (currentInput.equalsIgnoreCase("Wombo combo"))
+				{
+					result = "WOMBO COMBO THATS NOT FALCO THATS NOT FALCO WOWZA WOW WOOOWZAAA WOW";
+				}
+				if (currentInput.equalsIgnoreCase("half life"))
+				{
+					result = "one day Gaben will count too 3 and we will all be happy ";
+				}
+				if (currentInput.equalsIgnoreCase("Valve"))
+				{
+					result = "I had a dream that one day that valve and valves children will be able to count to the 3 and everyone will be happy";
+				}
+			} else if (randomPosition == 2)
 			{
-				// i heared you like if loops so i nested a few ifs in another if
-				if (memeChecker(currentInput))
+				//if(contentChecker(currentInput))
+				//{
+					//talk about users and stuff
+				//}
+				//else
+				//{
+					//talk about the users
+				//}
+			}else if (randomPosition == 3)
+			{
+				
+			}else if (randomPosition == 4)
+			{
+				//add to our list
+				userInputList.add(currentinput);
+				result = "Thanks for le comment m9";
+			}else
+			{
+				if(userInputChecker(currentInput))
 				{
-					result = "Wow! " + currentInput + " is like totally a meme! ";
-					if (currentInput.equalsIgnoreCase("Sound of silence"))
-					{
-						result = "Can you hear the Sound of Silence..?";
-					}
 					
-					if(currentInput.equalsIgnoreCase("Ravenholm"))
-					{
-						result = "Ravenholm...? we don't go.. to RavenHolm anymore";
-					}
-					if(currentInput.equalsIgnoreCase("Yo Dawg"))
-					{
-						result = "Yo Dawg I heard you like mei mei's so I put a meme in yo meme so you can read memes while you read memes";
-					}
-					if(currentInput.equalsIgnoreCase("Wombo combo"))
-					{ 
-						result = "WOMBO COMBO THATS NOT FALCO THATS NOT FALCO WOWZA WOW WOOOWZAAA WOW";
-					}
-					if(currentInput.equalsIgnoreCase("half life"))
-					{
-						result = "one day Gaben will count too 3 and we will all be happy ";
-					}
-					if(currentInput.equalsIgnoreCase("Valve"))
-					{
-						result ="I had a dream that one day that valve and valves children will be able to count to the 3 and everyone will be happy";
-					}
-					
-				} else
+				}
+				else
 				{
-					result = "not a meme, try again";
+					
 				}
 			}
-		}
-		else
+		} else
 		{
 			result = "Waht did you just say about me mum m8? i'll jab you in the gabber m8";
 		}
-
+		updateChatCount();
 		return result;
+	}
+	
+	private boolean userInputChecker(String userInput)
+	{
+		boolean matchesInput = false;
+		for(int loopCount =0; loopCount < userInputList.size(); loopCount++)
+		{
+			if(userInput.equalsIgnoreCase(userInputList.get(loopCount)))
+			{
+				matchesInput = true;
+				userInputList.remove(loopCount);
+				loopCount--;
+			}
+		}
+		return matchesInput;
 	}
 
 	private void updateChatCount()
 	{
 		chatCount++;
 	}
-	
+
 	private boolean stringLengthChecker(String input)
 	{
 		boolean isTooLong = false;
-		
-		if(input.length() >= 25)
+
+		if (input.length() >= 25)
 		{
 			isTooLong = true;
 		}
-		
+
 		return isTooLong;
 	}
 

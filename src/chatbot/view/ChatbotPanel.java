@@ -34,8 +34,9 @@ public class ChatbotPanel extends JPanel
 		firstTextField = new JTextField(25);
 		firstTextField.setEnabled(true);
 		baseLayout = new SpringLayout();
-		chatPane = new JScrollPane(chatArea);
 		chatArea = new JTextArea(5, 20);
+		chatPane = new JScrollPane(chatArea);
+		
 
 		setupPane();
 		setupPanel();
@@ -48,6 +49,7 @@ public class ChatbotPanel extends JPanel
 	{
 		chatArea.setLineWrap(true);
 		chatArea.setWrapStyleWord(true);
+		chatArea.setEditable(false);
 	}
 
 	private void setupPanel()
@@ -59,8 +61,7 @@ public class ChatbotPanel extends JPanel
 		this.add(firstButton);
 		this.add(firstTextField);
 		
-		label = new JLabel("yo dawg");
-		add(label);
+		
 		this.add(chatPane);
 
 	}
@@ -76,31 +77,29 @@ public class ChatbotPanel extends JPanel
 		baseLayout.putConstraint(SpringLayout.WEST, chatPane, 10, SpringLayout.WEST, this);
 		baseLayout.putConstraint(SpringLayout.SOUTH, chatPane, -13, SpringLayout.NORTH, firstButton);
 		baseLayout.putConstraint(SpringLayout.EAST, chatPane, -10, SpringLayout.EAST, this);
-		baseLayout.putConstraint(SpringLayout.NORTH, chatArea, 562, SpringLayout.NORTH, this);
-		baseLayout.putConstraint(SpringLayout.WEST, chatArea, 112, SpringLayout.WEST, this);
-		baseLayout.putConstraint(SpringLayout.NORTH, label, 80, SpringLayout.NORTH, this);
-		baseLayout.putConstraint(SpringLayout.EAST, label, -80, SpringLayout.EAST, this);
+		
+		
 	}
 
 	private void setupListeners()
 	{
-		firstTextField.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				label.setText(firstTextField.getText());
-				firstTextField.setText("");
-			}
-		});
-		
+			
 		firstButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent click)
 			{
-				label.setText(firstTextField.getText());
+				String userTypedText = firstTextField.getText();
+				String chatbotResponse = baseController.sendTextToChatBot(userTypedText);
+				displayTextToUser(userTypedText);
+				displayTextToUser(chatbotResponse);
 				firstTextField.setText("");
 			}
 		});
+	}
+	
+	
+	public void displayTextToUser(String userInput)
+	{
+		chatArea.append("\n" + userInput + "\n");
 	}
 }
