@@ -64,142 +64,145 @@ public class Chatbot
 	{
 		this.name = name;
 	}
-
+	/**
+	 * fills the meme list with some basic memes
+	 */
 	private void fillTheMemeList()
 	{
-		memeList.add("Yo Dawg");
+		
 		memeList.add("1v1");
 		memeList.add("Half life");
 		memeList.add("Sound of silence");
-		memeList.add("Wombo Combo");
 		memeList.add("Oh baby a Triple Kill");
 		memeList.add("You don't say?");
 		memeList.add("Wot you say m8");
-		memeList.add("Ravenholm");
-		memeList.add("valve");
+		
 	}
 
 	/**
-	 * Processes input from the user against the checker methods. returns next
-	 * output for the view
+	 * Processes input from the user against the checker methods.
+	 *  returns next output for the view
 	 * 
 	 * @param currentInput
 	 * @return The processed text based on the checker or other methods.
 	 */
-	public String processText(String currentinput)
+	public String processText(String currentInput)
 	{
-		String currentInput = currentinput;
-		String result = "daves not here man";
-		
-		
-		if(getChatCount() <  7)
+		String result = "";
+		if (getChatCount() < 5)
 		{
-			if(getChatCount() == 0)
+			
+			if (getChatCount() == 0)
 			{
-				myUser.setUserName(currentinput);
-				result = " cool name yo " + myUser.getUserName() + " how old are you?";
+				myUser.setUserName(currentInput);
+				result = "Good name " + myUser.getUserName() + " how old are you?";
 			}
-			else if(getChatCount() == 1)
+			else if (getChatCount() == 1)
 			{
-				int userAge = Integer.parseInt(currentinput);
+				int userAge = Integer.parseInt(currentInput);
 				myUser.setAge(userAge);
 			}
-			//continue for other user input fields
+			// do the same for other user info fields
 		}
-
-		int randomPosition = (int) (Math.random() * 6);
-		if (currentInput != null && currentInput.length() > 0)
+		else if (currentInput != null && currentInput.length() > 0)
 		{
-
+			int randomPosition = (int) (Math.random() * 6);
 			if (randomPosition == 0)
 			{
 				if (stringLengthChecker(currentInput))
 				{
 					result = "too long";
-				} else
+				}
+				else
 				{
 					result = "short words";
 				}
-
-			} else if (randomPosition == 1)
+			}
+			else if (randomPosition == 1)
 			{
-				// i heared you like if loops so i nested a few if's in another if
-				if (memeChecker(currentInput))
+				if (contentChecker(currentInput))
 				{
-					result = "you know their secret³";
-				} else
+					result = "you know thier secret³";
+				}
+				else
 				{
 					result = "i think thats one 2 l3ss than the secret";
-
 				}
+			}
+			else if (randomPosition == 2)
+			{
+				// i heared you like if loops so i nested a "few" ifs in another if
+				
+				if (memeChecker(currentInput))
+				{
+					result = "Wow, " + currentInput + " is a meme. Wahoo!";
+				}
+				/**
+				 * extra if statements that i put in for specific responses to certain memes
+				 */
 				if (currentInput.equalsIgnoreCase("Sound of silence"))
 				{
 					result = "Can you hear the Sound of Silence..?";
 				}
-
-				if (currentInput.equalsIgnoreCase("Ravenholm"))
+				
+				if(currentInput.equalsIgnoreCase("Ravenholm"))
 				{
 					result = "Ravenholm...? we don't go.. to RavenHolm anymore";
 				}
-				if (currentInput.equalsIgnoreCase("Yo Dawg"))
+				if(currentInput.equalsIgnoreCase("Yo Dawg"))
 				{
 					result = "Yo Dawg I heard you like mei mei's so I put a meme in yo meme so you can read memes while you read memes";
 				}
-				if (currentInput.equalsIgnoreCase("Wombo combo"))
-				{
+				if(currentInput.equalsIgnoreCase("Wombo combo"))
+				{ 
 					result = "WOMBO COMBO THATS NOT FALCO THATS NOT FALCO WOWZA WOW WOOOWZAAA WOW";
 				}
-				if (currentInput.equalsIgnoreCase("half life"))
+				if(currentInput.equalsIgnoreCase("Half life"))
 				{
-					result = "one day Gaben will count too 3 and we will all be happy ";
+					result = "36 devided by 3 is 12, 12 devided by 4 is 3, a triangle has three sides, iluminati is triangle, valve has 3 continuations being awaited that means half life 3 confirmed ";
 				}
-				if (currentInput.equalsIgnoreCase("Valve"))
+				if(currentInput.equalsIgnoreCase("Valve"))
 				{
-					result = "I had a dream that one day that valve and valves children will be able to count to the 3 and everyone will be happy";
-				}
-			} else if (randomPosition == 2)
-			{
-				//if(contentChecker(currentInput))
-				//{
-					//talk about users and stuff
-				//}
-				//else
-				//{
-					//talk about the users
-				//}
-			}else if (randomPosition == 3)
-			{
-				
-			}else if (randomPosition == 4)
-			{
-				//add to our list
-				userInputList.add(currentinput);
-				result = "Thanks for le comment m9";
-			}else
-			{
-				if(userInputChecker(currentInput))
-				{
-					
+					result ="I had a dream that one day that valve and valves children will be able to count to the 3 and make Half life 3 causing world peace";
 				}
 				else
 				{
-					
+					result = "not a meme, try again scrub";
 				}
 			}
-		} else
+			else if (randomPosition == 3)
+			{
+				// Talk about the user here
+			}
+			else if (randomPosition == 4)
+			{
+				// add to our list
+				userInputList.add(currentInput);
+				result = "thank you fine citizen thank you for the comment -ps not a cop";
+			}
+			else
+			{
+				if (userInputChecker(currentInput))
+				{
+				}
+				else
+				{
+				}
+			}
+		}
+		else
 		{
-			result = "Waht did you just say about me mum m8? i'll jab you in the gabber m8";
+			result = "use words!!!!";
 		}
 		updateChatCount();
 		return result;
-	}
-	
+	}// checks what the user input to see if it is relevant
 	private boolean userInputChecker(String userInput)
 	{
 		boolean matchesInput = false;
-		for(int loopCount =0; loopCount < userInputList.size(); loopCount++)
+		for (int loopCount = 0; loopCount < userInputList.size(); loopCount++)
 		{
-			if(userInput.equalsIgnoreCase(userInputList.get(loopCount)))
+			if (userInput.equalsIgnoreCase(userInputList.get(loopCount)))
 			{
 				matchesInput = true;
 				userInputList.remove(loopCount);
@@ -217,19 +220,23 @@ public class Chatbot
 	private boolean stringLengthChecker(String input)
 	{
 		boolean isTooLong = false;
-
-		if (input.length() >= 25)
+		if (input.length() >= 20)
 		{
 			isTooLong = true;
 		}
-
 		return isTooLong;
 	}
 
+	private boolean contentChecker(String input)
+	{
+		boolean hasContent = false;
+		return hasContent;
+
+	}
+	// checks to see if users message a meme from meme list
 	private boolean memeChecker(String input)
 	{
 		boolean isAMeme = false;
-
 		for (String currentMeme : memeList)
 		{
 			if (input.equalsIgnoreCase(currentMeme))
@@ -237,15 +244,13 @@ public class Chatbot
 				isAMeme = true;
 			}
 		}
-
-		for (int LoopCounter = 0; LoopCounter < memeList.size(); LoopCounter++)
+		for (int loopCounter = 0; loopCounter < memeList.size(); loopCounter++)
 		{
-			if (input.equalsIgnoreCase(memeList.get(LoopCounter)))
+			if (input.equalsIgnoreCase(memeList.get(loopCounter)))
 			{
 				isAMeme = true;
 			}
 		}
-
 		return isAMeme;
 	}
 
@@ -253,13 +258,12 @@ public class Chatbot
 	{
 		boolean okToQuit = false;
 
-		if (input != null && input.equalsIgnoreCase("go die"))
+		if (input != null && input.equalsIgnoreCase("Go die"))
 		{
 			okToQuit = true;
 		}
-
 		return okToQuit;
 	}
-
-	// remember Alt 0179 = exponent 3 ³
 }
+	// remember Alt 0179 = exponent 3 ³
+

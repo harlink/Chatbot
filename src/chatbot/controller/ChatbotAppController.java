@@ -8,8 +8,8 @@ import chatbot.view.ChatbotView;
 /**
  * Runs the Chatbot Project. Owns the model and associated views.
  * 
- * @author hpre8409
- * @version 1.2 10/2/14
+ * @author Harlink
+ * @version 1.5 12/5/14
  */
 public class ChatbotAppController {
 	/**
@@ -70,6 +70,11 @@ public class ChatbotAppController {
 		
 		return respondText;
 	}
+	/**gets the Dialog from the chatbotpanel
+	 * 
+	 * @param input
+	 * @return
+	 */
 	public String getChatbotDialog(String input)
 	{
 		String result ="";

@@ -68,6 +68,14 @@ public class ChatbotPanel extends JPanel
 
 	private void setupLayout()
 	{
+		
+		
+		
+		/**
+		 * the boring/annoying base layout stuff that goes everywhere
+		 *  when you move or change anything in the window builder
+		 */
+		
 		baseLayout.putConstraint(SpringLayout.EAST, firstButton, -10, SpringLayout.EAST, this);
 		baseLayout.putConstraint(SpringLayout.WEST, firstTextField, 10, SpringLayout.WEST, this);
 		baseLayout.putConstraint(SpringLayout.EAST, firstTextField, -6, SpringLayout.WEST, firstButton);
@@ -90,8 +98,10 @@ public class ChatbotPanel extends JPanel
 			{
 				String userTypedText = firstTextField.getText();
 				String chatbotResponse = baseController.sendTextToChatBot(userTypedText);
+				
 				displayTextToUser(userTypedText);
 				displayTextToUser(chatbotResponse);
+				
 				firstTextField.setText("");
 			}
 		});
